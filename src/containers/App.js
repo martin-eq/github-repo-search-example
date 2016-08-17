@@ -12,19 +12,6 @@ import ResultList from '../components/ResultList';
  */
 export default class App extends Component {
 
-  onChangeSearchTerm(event) {
-    this.setState({searchTerm: event.target.value});
-  }
-
-  doSearchCall(event) {
-    const { searchTerm } = this.state;
-    event.preventDefault();
-
-    if (searchTerm) {
-      return this.setState({results: []});
-    }
-  }
-
   render() {
     const { counter, actions } = this.props;
     let loadingText = null;
