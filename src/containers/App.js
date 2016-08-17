@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as CounterActions from '../actions/CounterActions';
+import * as GithubActions from '../actions/GithubActions';
 import SearchBar from '../components/SearchBar';
 import ResultList from '../components/ResultList';
 
@@ -11,49 +11,25 @@ import ResultList from '../components/ResultList';
  * component to make the Redux store available to the rest of the app.
  */
 export default class App extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      searchTerm: '',
-      results: [],
-      loading: false
-    };
-  }
 
   onChangeSearchTerm(event) {
     this.setState({searchTerm: event.target.value});
   }
 
   doSearchCall(event) {
+    const { searchTerm } = this.state;
     event.preventDefault();
 
-    const { searchTerm } = this.state;
-
-    if (!searchTerm) {
+    if (searchTerm) {
       return this.setState({results: []});
     }
-
-    this.setState({loading: true});
-
-    fetch(`https://api.github.com/search/repositories?q=user:${searchTerm}`, {
-      method: 'get'
-    })
-    .then(response => response.json())
-    .then(response => {
-      this.setState({results: response.items});
-      this.setState({loading: false});
-    }).catch(() => {
-      this.setState({loading: false});
-      alert('An error ocurred while trying to search.')
-    });
   }
 
   render() {
     const { counter, actions } = this.props;
     let loadingText = null;
 
-    if (this.state.loading) {
+    if (this.props.loading) {
       loadingText = <h2>Seaching...</h2>;
     }
 
@@ -61,15 +37,21 @@ export default class App extends Component {
       <div className="main-app-container">
         <div className="main-app-nav">Github Repo Search Example</div>
 
-        <SearchBar onChangeSearchTerm={this.onChangeSearchTerm.bind(this)} doSearchCall={this.doSearchCall.bind(this)} />
+        <SearchBar actions={actions} />
 
         {loadingText}
 
-        <ResultList results={this.state.results} />
+        <ResultList results={this.props.items} />
       </div>
     );
   }
 }
+
+App.propTypes = {
+  items: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  actions: PropTypes.object.isRequired
+};
 
 /**
  * Keep in mind that 'state' isn't the state of local object, but your single
@@ -78,21 +60,22 @@ export default class App extends Component {
  */
 function mapStateToProps(state) {
   return {
-    counter: state.counter
+    items: state.github.items,
+    loading: state.github.loading
   };
 }
 
 /**
  * Turns an object whose values are 'action creators' into an object with the same
  * keys but with every action creator wrapped into a 'dispatch' call that we can invoke
- * directly later on. Here we imported the actions specified in 'CounterActions.js' and
+ * directly later on. Here we imported the actions specified in 'GithubActions.js' and
  * used the bindActionCreators function Redux provides us.
  *
  * More info: http://redux.js.org/docs/api/bindActionCreators.html
  */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(CounterActions, dispatch)
+    actions: bindActionCreators(GithubActions, dispatch)
   };
 }
 

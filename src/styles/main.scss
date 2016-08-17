@@ -25,57 +25,10 @@ body {
   margin-bottom: 20px;
 }
 
-.counter-num-label {
-  color: $accent-orange;
-  padding-top: 1em;
-  font-size: 3em;
-  text-align: center;
-  width: 100%;
+.mr5 {
+  margin-right: 5px;
 }
 
-.counter-even-label {
-  padding-top: 1em;
-  font-size: 0.75em;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-}
-
-.counter-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 3em;
-
-  button {
-    background-color: #CCC;
-    border: none;
-    height: 30px;
-    width: 80px;
-    margin-left: 1em;
-    margin-right: 1em;
-
-    &:hover {
-      background-color: $accent-gray;
-    }
-  }
-}
-
-footer {
-  font-size: 0.75em;
-  text-align: center;
-  padding-top: 10em;
-
-  a {
-    text-decoration: none;
-    color: inherit;
-
-    &:hover {
-      color: $accent-blue;
-    }
-  }
-
-  #heart{
-    color: $accent-red;
-  }
+.mb15 {
+  margin-bottom: 15px;
 }

@@ -9,13 +9,8 @@ export default class ResultList extends Component {
       return null;
     }
 
-    const tableStyle = {
-      marginTop: '10px',
-      textAlign: 'center'
-    };
-
     return (
-      <table style={tableStyle}>
+      <table className="table table-hover">
         <thead>
           <tr>
             <th>Id</th>
@@ -26,9 +21,9 @@ export default class ResultList extends Component {
 
         <tbody>
           {
-            results.map(result => {
+            results.map((result, i) => {
               return (
-                <tr>
+                <tr key={i}>
                   <td>{result.id}</td>
                   <td>{result.name}</td>
                   <td><a href={result.html_url}>{result.html_url}</a></td>
